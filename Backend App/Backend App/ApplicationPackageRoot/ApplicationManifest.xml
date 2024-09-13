@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ApplicationManifest ApplicationTypeName="Backend_AppType"
-                     ApplicationTypeVersion="1.0.0"
-                     xmlns="http://schemas.microsoft.com/2011/01/fabric"
-                     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="Backend_AppType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
-    <Parameter Name="Stateless1_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="RideServiceStateless_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="UserServiceStateful_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="UserServiceStateful_PartitionCount" DefaultValue="1" />
+    <Parameter Name="UserServiceStateful_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Stateless1Pkg" ServiceManifestVersion="1.0.0" />
+    <ServiceManifestRef ServiceManifestName="RideServiceStatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="UserServiceStatefulPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
   </ServiceManifestImport>
   <DefaultServices>
@@ -20,10 +23,15 @@
          ServiceFabric PowerShell module.
 
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="Stateless1" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="Stateless1Type" InstanceCount="[Stateless1_InstanceCount]">
+    <Service Name="RideServiceStateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="RideServiceStatelessType" InstanceCount="[RideServiceStateless_InstanceCount]">
         <SingletonPartition />
       </StatelessService>
+    </Service>
+    <Service Name="UserServiceStateful" ServicePackageActivationMode="ExclusiveProcess">
+      <StatefulService ServiceTypeName="UserServiceStatefulType" TargetReplicaSetSize="[UserServiceStateful_TargetReplicaSetSize]" MinReplicaSetSize="[UserServiceStateful_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[UserServiceStateful_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
     </Service>
   </DefaultServices>
 </ApplicationManifest>

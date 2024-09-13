@@ -32,7 +32,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Stateless1\Stateless1.csproj" />
+    <ProjectReference Include="..\RideServiceStateless\RideServiceStateless.csproj" />
+    <ProjectReference Include="..\UserServiceStateful\UserServiceStateful.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>
