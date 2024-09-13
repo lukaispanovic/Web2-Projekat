@@ -1,11 +1,10 @@
+using Microsoft.ServiceFabric.Services.Runtime;
 using System;
 using System.Diagnostics;
-using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace Stateless1
+namespace ServiceControllers
 {
     internal static class Program
     {
@@ -21,12 +20,12 @@ namespace Stateless1
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
-                ServiceRuntime.RegisterServiceAsync("Stateless1Type",
-                    context => new Stateless1(context)).GetAwaiter().GetResult();
+                ServiceRuntime.RegisterServiceAsync("ServiceControllersType",
+                    context => new ServiceControllers(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless1).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(ServiceControllers).Name);
 
-                // Prevents this host process from terminating so services keep running.
+                // Prevents this host process from terminating so services keeps running. 
                 Thread.Sleep(Timeout.Infinite);
             }
             catch (Exception e)

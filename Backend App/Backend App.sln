@@ -5,11 +5,13 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Backend App", "Backend App\Backend App.sfproj", "{2F3548A3-8E70-4BBD-BFDE-61232C8E3619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserServiceStateful", "UserServiceStateful\UserServiceStateful.csproj", "{95202315-0A1F-4A42-8FCF-9442F28BF59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServiceStateful", "UserServiceStateful\UserServiceStateful.csproj", "{95202315-0A1F-4A42-8FCF-9442F28BF59D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{BC7B8130-4810-4CBE-926E-86CA2DC58B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{BC7B8130-4810-4CBE-926E-86CA2DC58B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideServiceStateless", "RideServiceStateless\RideServiceStateless.csproj", "{511BF88A-603A-4691-93FB-E69461348C73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideServiceStateless", "RideServiceStateless\RideServiceStateless.csproj", "{511BF88A-603A-4691-93FB-E69461348C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControllers", "ServiceControllers\ServiceControllers.csproj", "{E335C6B5-E162-491A-9CB3-349C50DF5931}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,14 @@ Global
 		{511BF88A-603A-4691-93FB-E69461348C73}.Release|Any CPU.Build.0 = Release|Any CPU
 		{511BF88A-603A-4691-93FB-E69461348C73}.Release|x64.ActiveCfg = Release|Any CPU
 		{511BF88A-603A-4691-93FB-E69461348C73}.Release|x64.Build.0 = Release|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Debug|x64.Build.0 = Debug|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Release|x64.ActiveCfg = Release|Any CPU
+		{E335C6B5-E162-491A-9CB3-349C50DF5931}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

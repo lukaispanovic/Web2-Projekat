@@ -33,6 +33,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RideServiceStateless\RideServiceStateless.csproj" />
+    <ProjectReference Include="..\ServiceControllers\ServiceControllers.csproj">
+      <ServiceLaunchUrl>http://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
+    </ProjectReference>
     <ProjectReference Include="..\UserServiceStateful\UserServiceStateful.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
