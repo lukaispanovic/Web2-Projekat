@@ -44,10 +44,26 @@ namespace ServiceControllers
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url);
+                        builder.Services.AddCors();
                         builder.Services.AddControllers();
                         builder.Services.AddEndpointsApiExplorer();
+                        builder.Services.AddDistributedMemoryCache();
                         builder.Services.AddSwaggerGen();
+                        builder.Services.AddSession(options =>
+                        {
+                            options.IdleTimeout = TimeSpan.FromMinutes(120);
+                            options.Cookie.HttpOnly = true;
+                            options.Cookie.IsEssential = true;
+                        });
+
                         var app = builder.Build();
+                        app.UseSession();
+                        app.UseCors(options =>
+                        {
+                            options.AllowAnyOrigin()
+                                   .AllowAnyMethod()
+                                   .AllowAnyHeader();
+                        });
                         if (app.Environment.IsDevelopment())
                         {
                         app.UseSwagger();

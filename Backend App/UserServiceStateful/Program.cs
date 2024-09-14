@@ -2,7 +2,10 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Runtime;
+using UserServiceStateful.UserServiceDatabase;
 
 namespace UserServiceStateful
 {
@@ -20,8 +23,12 @@ namespace UserServiceStateful
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
+                ServiceCollection serviceCollection = new();
+                serviceCollection.AddAutoMapper(typeof(Mapping));
+                ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
                 ServiceRuntime.RegisterServiceAsync("UserServiceStatefulType",
-                    context => new UserServiceStateful(context)).GetAwaiter().GetResult();
+                    context => new UserServiceStateful(context, provider.GetRequiredService<IMapper>())).GetAwaiter().GetResult();
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(UserServiceStateful).Name);
 

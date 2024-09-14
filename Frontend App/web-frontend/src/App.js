@@ -1,23 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Login from "./Components/Login";
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
+  const navigate = useNavigate();
+
   return (
+    <div>
     <div className="App">
+      <ToastContainer position='top-right' autoClose={3000}/>
+
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Routes>
+        <Route path='/' element={<Login/>}/> 
+        <Route path='/login' element={<Login/>}/>
+        </Routes>
       </header>
+      </div>
     </div>
   );
 }
