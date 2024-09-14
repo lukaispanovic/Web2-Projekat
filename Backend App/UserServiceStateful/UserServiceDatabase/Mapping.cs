@@ -14,6 +14,7 @@ namespace UserServiceStateful.UserServiceDatabase
         public Mapping() 
         {
             CreateMap<UserLoginDTO, User>();
+            CreateMap<UserRegisterDTO, User>();
             CreateMap<User, UserDTO>();
         }
     }

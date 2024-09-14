@@ -12,5 +12,7 @@ namespace Common.Interfaces
         Task<User> GetUserByEmailAsync(string email);
 
         Task<User> GetUserByUsernameAsync(string username);
+
+        Task<User> AddUserAsync(User user);
     }
 }

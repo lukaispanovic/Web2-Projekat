@@ -44,3 +44,26 @@ export const LoginUser = async (data) => {
       return handleApiError(error);
     }
   };
+
+  export const RegisterUser = async (data) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/register`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if(response.status === 200){
+        const decodedToken = decodeToken(response.data.token);
+  
+        const user = User.fromObject(response.data.user);
+  
+        localStorage.setItem('encodedToken', JSON.stringify(response.data.token));
+        localStorage.setItem('token', JSON.stringify(decodedToken));
+        localStorage.setItem('user', JSON.stringify(user));
+        return response;
+        }
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };

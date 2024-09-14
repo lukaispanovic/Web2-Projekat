@@ -35,5 +35,21 @@ namespace UserServiceStateful.UserServiceDatabase
                 return user;
             }
         }
+
+        public async Task<User> AddUserAsync(User user)
+        {
+            using (var _context = new UserDbContext())
+            {
+                if (user == null)
+                    return new User();
+
+                var added = _context.Users.Add(user);
+
+                if (await _context.SaveChangesAsync() > 0)
+                    return added.Entity;
+
+                return new User();
+            }
+        }
     }
 }
