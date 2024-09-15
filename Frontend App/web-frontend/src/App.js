@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Login from "./Components/Login";
 import Register from "./Components/Register"
+import Profile from './Components/Profile';
 import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<Login/>}/> 
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/home/profile' element={<Profile/>} />
         </Routes>
       </header>
       </div>

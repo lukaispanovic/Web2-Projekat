@@ -67,3 +67,23 @@ export const LoginUser = async (data) => {
       return handleApiError(error);
     }
   };
+
+  export const EditProfile = async (data) => {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/updateProfile`, data);
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
+  export const FetchPFP = async (filename) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/getPfPFromUserId`, {
+        params: { filename },
+      });
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };

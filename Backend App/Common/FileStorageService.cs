@@ -54,5 +54,22 @@ namespace Common
                 return await reader.ReadToEndAsync();
             }
         }
+
+        public async Task<string> GetFileBase64StringAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The specified file was not found.", filePath);
+            }
+
+            byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+
+            string base64String = Convert.ToBase64String(fileBytes);
+
+            string fileExtension = Path.GetExtension(filePath).ToLower();
+            string mimeType = fileExtension == ".png" ? "image/png" : "image/jpeg";
+
+            return $"data:{mimeType};base64,{base64String}";
+        }
     }
 }

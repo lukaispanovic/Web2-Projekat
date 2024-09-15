@@ -95,5 +95,58 @@ namespace ServiceControllers.Controllers
                 return BadRequest("Invalid request has been made!");
             }
         }
+
+        [HttpPut("updateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromForm] UserEditDTO dto)
+        {
+            try
+            {
+                string url = string.Empty;
+                if (dto.File != null)
+                {
+                    var fileUrl = await _fileStorageService.UploadFileAsync(dto.File);
+                    url = fileUrl;
+                }
+
+                if (url == string.Empty)
+                    return BadRequest("Failed to upload profie image");
+
+                User data = ControllerMapper.EditToUser(dto, url);
+                var updatedUserDto = await _userService.EditUser(data);
+                return Ok(updatedUserDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("getUserData")]
+        public async Task<IActionResult> GetUserData([FromQuery] int id)
+        {
+            try
+            {
+                var userDto = await _userService.GetUserById(id);
+                return Ok((userDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("getPfPFromUserId")]
+        public async Task<IActionResult> GetPfPFromUserId([FromQuery] string filename)
+        {
+            try
+            {
+                var userPfPString = await _fileStorageService.GetFileBase64StringAsync(filename);
+                return Ok(userPfPString);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

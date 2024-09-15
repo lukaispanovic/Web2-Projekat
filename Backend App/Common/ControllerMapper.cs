@@ -26,5 +26,22 @@ namespace Common
                 Verified = false
             };
         }
+
+        public static User EditToUser(this UserEditDTO dto, string profilePictureUrl)
+        {
+            return new User
+            {
+                Username = dto.Username,
+                Name = dto.Name,
+                Surname = dto.Surname,
+                Password = "",
+                Address = dto.Address,
+                Birthday = dto.Birthday,
+                UserType = dto.UserType,
+                Email = dto.Email,
+                ProfilePictureUrl = profilePictureUrl,
+                Verified = false
+            };
+        }
     }
 }

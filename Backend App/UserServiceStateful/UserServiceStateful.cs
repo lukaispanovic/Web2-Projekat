@@ -75,5 +75,39 @@ namespace UserServiceStateful
             await _repository.AddUserAsync(user);
             return _mapper.Map<UserDTO>(user);
         }
+
+        public async Task<UserDTO> EditUser(User user)
+        {
+            User old = await _repository.GetUserByEmailAsync(user.Email);
+            user.Password = old.Password;
+            user.Id = old.Id;
+            await _repository.UpdateUserAsync(user);
+            return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> GetUserById(int id)
+        {
+            if (id <= 0)
+                return new();
+            try
+            {
+                User user = await _repository.GetUserByIdAsync(id);
+                if (user.Id != 0)
+                {
+                    string slika = await _fileStorageService.GetFileStringAsync(user.ProfilePictureUrl);
+                    if (slika == string.Empty)
+                        return new();
+
+                    user.ProfilePictureUrl = slika;
+                    return _mapper.Map<User, UserDTO>(user);
+                }
+                else
+                    return new();
+            }
+            catch
+            {
+                return new();
+            }
+        }
     }
 }

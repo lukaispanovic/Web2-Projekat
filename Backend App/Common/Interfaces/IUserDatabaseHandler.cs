@@ -14,5 +14,9 @@ namespace Common.Interfaces
         Task<User> GetUserByUsernameAsync(string username);
 
         Task<User> AddUserAsync(User user);
+
+        Task<User> UpdateUserAsync(User user);
+
+        Task<User> GetUserByIdAsync(int id);
     }
 }

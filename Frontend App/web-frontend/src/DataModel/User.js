@@ -1,10 +1,10 @@
 import React from 'react';
 
 export class User {
-    constructor(username, name, lastname, address, birthday, userType, email, profilePictureUrl, id, verified) {
+    constructor(username, name, surname, address, birthday, userType, email, profilePictureUrl, id, verified) {
         this.username = username;
         this.name = name;
-        this.lastname = lastname;
+        this.surname = surname;
         this.address = address;
         this.birthday = birthday;
         this.userType = userType;
@@ -29,7 +29,7 @@ export class User {
         return new User(
             obj.username,
             obj.name,
-            obj.lastname,
+            obj.surname,
             obj.address,
             obj.birthday,
             obj.userType,

@@ -13,5 +13,7 @@ namespace Common.Interfaces
     {
         Task<UserDTO> LoginUser(UserLoginDTO dto);
         Task<UserDTO> RegisterUser(User dto);
+        Task<UserDTO> EditUser(User dto);
+        Task<UserDTO> GetUserById(int id);
     }
 }

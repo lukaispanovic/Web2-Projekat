@@ -51,5 +51,23 @@ namespace UserServiceStateful.UserServiceDatabase
                 return new User();
             }
         }
+
+        public async Task<User> UpdateUserAsync(User user)
+        {
+            using (var _context = new UserDbContext())
+            {
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return user;
+            }
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            using (var _context = new UserDbContext())
+            {
+                return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+            }
+        }
     }
 }

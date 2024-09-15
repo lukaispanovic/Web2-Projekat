@@ -11,5 +11,6 @@ namespace Common.Interfaces
     {
         Task<string> UploadFileAsync(IFormFile file);
         Task<string> GetFileStringAsync(string fileName);
+        Task<string> GetFileBase64StringAsync(string filePath);
     }
 }
