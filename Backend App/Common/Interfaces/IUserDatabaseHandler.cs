@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,5 +19,7 @@ namespace Common.Interfaces
         Task<User> UpdateUserAsync(User user);
 
         Task<User> GetUserByIdAsync(int id);
+
+        Task<List<User>> FilterUsersAsync(Expression<Func<User, bool>> filter);
     }
 }

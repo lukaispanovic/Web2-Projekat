@@ -1,21 +1,21 @@
-﻿using Common.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.DataModel
+namespace Common.DTOs
 {
-    public class Ride
+    [DataContract]
+    public class RideDataDTO
     {
         [DataMember]
         public int Id { get; set; }
 
         [DataMember]
         public int UserId { get; set; }
-
+        [DataMember]
         public int? DriverId { get; set; }
 
         [DataMember]
@@ -25,7 +25,7 @@ namespace Common.DataModel
         public string EndAddress { get; set; } = string.Empty;
 
         [DataMember]
-        public float Price { get; set; }
+        public decimal Price { get; set; }
 
         [DataMember]
         public int WaitingTime { get; set; }
@@ -38,5 +38,13 @@ namespace Common.DataModel
 
         [DataMember]
         public int ReviewScore { get; set; }
+
+    }
+    [DataContract]
+    public enum StatusOfRide
+    {
+        [EnumMember] InProgress,
+        [EnumMember] Created,
+        [EnumMember] Done
     }
 }

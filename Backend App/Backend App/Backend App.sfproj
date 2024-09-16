@@ -32,6 +32,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EmailServiceStateless\EmailServiceStateless.csproj" />
     <ProjectReference Include="..\RideServiceStateless\RideServiceStateless.csproj" />
     <ProjectReference Include="..\ServiceControllers\ServiceControllers.csproj">
       <ServiceLaunchUrl>http://localhost:{ServicePort}/swagger</ServiceLaunchUrl>

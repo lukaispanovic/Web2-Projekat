@@ -87,3 +87,42 @@ export const LoginUser = async (data) => {
       return handleApiError(error);
     }
   };
+
+  export const VerifyUser= async (username, v) => {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/verify/${username}/${v}`, [], {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':  JSON.parse(localStorage.getItem('encodedToken')),
+        },
+      });
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
+  export const GetDrivers = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/getDrivers`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JSON.parse(localStorage.getItem('encodedToken')),
+        },
+      });
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
+  export const GetUserData = async (username) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/getUserData`, {
+        params: { username },
+      });
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };

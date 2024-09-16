@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,6 +68,14 @@ namespace UserServiceStateful.UserServiceDatabase
             using (var _context = new UserDbContext())
             {
                 return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+            }
+        }
+
+        public async Task<List<User>> FilterUsersAsync(Expression<Func<User, bool>> filter)
+        {
+            using (var _context = new UserDbContext())
+            {
+                return await _context.Users.Where(filter).ToListAsync();
             }
         }
     }

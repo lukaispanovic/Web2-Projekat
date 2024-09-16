@@ -148,5 +148,51 @@ namespace ServiceControllers.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPut("verify/{username}/{v}")]
+        public async Task<IActionResult> VerifyUser(string username, bool v)
+        {
+
+            if (TokenService.GetClaimValueFromToken(HttpContext.Request.Headers.Authorization, "user_role") != "Admin")
+                return Unauthorized("You don't have permission to read user data!");
+
+            try
+            {
+                UserDTO user = await _userService.VerifyUser(username, v);
+
+                if (user != null && user.Id != 0)
+                {
+                    string email = user.Email;
+                    string poruka = $"Your account status is now: {(v ? "verified" : "rejected")}";
+
+
+                    await ServiceProxy.Create<IEmailServiceStateless>(new Uri("fabric:/TaxiServiceFabric/EmailServiceStateless")).AddEmail(email, poruka);
+
+                    return Ok("Verification status has been updated!");
+                }
+                else
+                    return NotFound("User profile couldn't be found!");
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("getDrivers")]
+        public async Task<IActionResult> GetDrivers()
+        {
+            try
+            {
+                if (TokenService.GetClaimValueFromToken(HttpContext.Request.Headers.Authorization, "user_role") != "Admin")
+                    return Unauthorized("You don't have permission to read users data!");
+                var sellers = await _userService.GetDrivers();
+                return Ok(sellers);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

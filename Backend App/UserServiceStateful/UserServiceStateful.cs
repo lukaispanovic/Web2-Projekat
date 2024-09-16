@@ -109,5 +109,25 @@ namespace UserServiceStateful
                 return new();
             }
         }
+
+        public async Task<UserDTO> GetUserData(string username)
+        {
+            var user = await _repository.GetUserByEmailAsync(username);
+            return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetDrivers()
+        {
+            var users = await _repository.FilterUsersAsync(u => u.UserType == "Driver");
+            return _mapper.Map<IEnumerable<UserDTO>>(users);
+        }
+
+        public async Task<UserDTO> VerifyUser(string username, bool isVerified)
+        {
+            var user = await _repository.GetUserByUsernameAsync(username);
+            user.Verified = isVerified;
+            await _repository.UpdateUserAsync(user);
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }

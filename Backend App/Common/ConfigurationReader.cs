@@ -23,6 +23,7 @@ namespace Common
 
         public string UsersSqlConnection => _configuration["ConnectionStrings:UsersSqlConnection"];
         public string RidesSqlConnection => _configuration["ConnectionStrings:RidesSqlConnection"];
+        public string EmailsSqlConnection => _configuration["ConnectionStrings:EmailsSqlConnection"];
 
         public string FileStoragePath => _configuration["FileStorage:Path"];
 
