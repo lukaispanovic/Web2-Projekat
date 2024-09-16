@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GetDrivers } from "../../Services/UserService";
+import { getRides } from "../../Services/RideService";
+import AdminRideList from "./AdminRideList";
 import Header from "../Header";
 
 const AdminPanel = () => {
@@ -16,7 +18,39 @@ const AdminPanel = () => {
       } catch (error) {
         console.error('Failed to fetch drivers:', error);
       }
-    }; 
+    };
+  
+    const fetchRides = async () => {
+      try {
+        const response = await getRides();
+        setRides(response.data); 
+      } catch (error) {
+        console.error('Failed to fetch rides:', error);
+      }
+    };
+  
+    const calculateScore = () => {
+      const driverScores = drivers.map(driver => {
+        const driverRides = rides.filter(ride => ride.driverId === driver.id);
+        
+        const totalRating = driverRides.reduce((sum, ride) => sum + (ride.reviewScore || 0), 0);
+        const numberOfRides = driverRides.length;
+        const averageRating = numberOfRides > 0 ? totalRating / numberOfRides : 0;
+  
+        const score = averageRating * numberOfRides; 
+        
+        return {
+          ...driver,
+          score: score,
+        };
+      });
+  
+      setDriversWScore(driverScores);
+    };
+    
+
+    fetchDrivers().then(fetchRides).then(calculateScore);
+  
   }, []); 
   
   return (

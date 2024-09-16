@@ -18,5 +18,7 @@ namespace Common.Interfaces
         Task<UserDTO> GetUserData(string username);
         Task<IEnumerable<UserDTO>> GetDrivers();
         Task<UserDTO> VerifyUser(string username, bool isVerified);
+        Task<RideDataDTO> GetUserRideData(int user_id);
+        Task<bool> SetUserWaitOnRide(RideDataDTO data);
     }
 }

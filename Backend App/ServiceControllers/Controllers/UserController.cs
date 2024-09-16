@@ -166,7 +166,7 @@ namespace ServiceControllers.Controllers
                     string poruka = $"Your account status is now: {(v ? "verified" : "rejected")}";
 
 
-                    await ServiceProxy.Create<IEmailServiceStateless>(new Uri("fabric:/TaxiServiceFabric/EmailServiceStateless")).AddEmail(email, poruka);
+                    await ServiceProxy.Create<IEmailServiceStateless>(new Uri("fabric:/Backend_App/EmailServiceStateless")).AddEmail(email, poruka);
 
                     return Ok("Verification status has been updated!");
                 }
@@ -175,7 +175,7 @@ namespace ServiceControllers.Controllers
             }
             catch
             {
-                return StatusCode(500);
+                return BadRequest(500);
             }
         }
 

@@ -13,14 +13,15 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using MimeKit;
 using MimeKit.Text;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 
 namespace EmailServiceStateless
 {
 
     internal sealed class EmailServiceStateless : StatelessService, IEmailServiceStateless
     {
-        private static string senderAddress = "";
-        private static string senderAppPassword = "";
+        private static string senderAddress = "webprojekatemailsender@gmail.com";
+        private static string senderAppPassword = "kpxi hvge qspc ilxq";
         private static string smtpServerAddress = "smtp.gmail.com";
         private static int smtpServerPortNumber = 587;
 
@@ -39,7 +40,7 @@ namespace EmailServiceStateless
 
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            return new ServiceInstanceListener[0];
+            return this.CreateServiceRemotingInstanceListeners();
         }
 
         protected override async Task RunAsync(CancellationToken cancellationToken)

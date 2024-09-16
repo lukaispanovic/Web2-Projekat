@@ -14,6 +14,7 @@ using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using UserServiceStateful.UserServiceDatabase;
 using Common.DataModel;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 
 namespace UserServiceStateful
 {
@@ -26,6 +27,8 @@ namespace UserServiceStateful
         private readonly IMapper _mapper;
         private readonly IUserDatabaseHandler _repository;
         private readonly IFileStorageService _fileStorageService;
+
+        private readonly IRideServiceStateless _ridesServices = ServiceProxy.Create<IRideServiceStateless>(new Uri("fabric:/Backend_App/RideServiceStateless"));
 
         public UserServiceStateful(StatefulServiceContext context, IMapper mapper)  : base(context)
         { 
@@ -128,6 +131,31 @@ namespace UserServiceStateful
             user.Verified = isVerified;
             await _repository.UpdateUserAsync(user);
             return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<RideDataDTO> GetUserRideData(int userId)
+        {
+            var user = await _repository.GetUserByIdAsync(userId);
+            if (user == null || user.RideDataId == null)
+            {
+                return new RideDataDTO();
+            }
+            var data = await _ridesServices.GetRideById(user.RideDataId.Value);
+            if (data == null)
+                return new RideDataDTO();
+            return data;
+        }
+
+        public async Task<bool> SetUserWaitOnRide(RideDataDTO data)
+        {
+            var user = await _repository.GetUserByIdAsync(data.UserId);
+            if (user != null)
+            {
+                user.RideDataId = data.Id;
+                await _repository.UpdateUserAsync(user);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -3,7 +3,10 @@ using System.Diagnostics;
 using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Runtime;
+using RideServiceStateless.RideServiceDatabase;
 
 namespace RideServiceStateless
 {
@@ -21,8 +24,12 @@ namespace RideServiceStateless
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
+                ServiceCollection serviceCollection = new();
+                serviceCollection.AddAutoMapper(typeof(Mapping));
+                ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
                 ServiceRuntime.RegisterServiceAsync("RideServiceStatelessType",
-                    context => new RideServiceStateless(context)).GetAwaiter().GetResult();
+                    context => new RideServiceStateless(context, provider.GetRequiredService<IMapper>())).GetAwaiter().GetResult();
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(RideServiceStateless).Name);
 
