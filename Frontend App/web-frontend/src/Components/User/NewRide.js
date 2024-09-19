@@ -65,12 +65,11 @@ const NewRide = () => {
       userId: parseInt(token.id),
     });
 
-    setPriceCalculated(true); // Set to true after calculating price
-    setPriceButtonDisabled(true); // Disable the Calculate Price button
+    setPriceCalculated(true);
+    setPriceButtonDisabled(true); 
   };
 
   useEffect(() => {
-    // Reset the button states if the startAddress or endAddress fields change
     setPriceButtonDisabled(false);
     setPriceCalculated(false);
   }, [data.startAddress, data.endAddress]);

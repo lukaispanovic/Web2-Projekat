@@ -15,6 +15,8 @@ import RideCountdown from './Components/User/RideCountdown';
 import DriverPreviousRides from './Components/Driver/DriverPreviousRides';
 import DriverNewRidesList from './Components/Driver/DriverNewRidesList';
 import { ToastContainer, toast } from 'react-toastify';
+import DriverRideCountdown from './Components/Driver/DriverRideCountdown';
+import Rerouter from './Components/Rerouter';
 
 function App() {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ function App() {
     <div>
     <div className="App">
       <ToastContainer position='top-right' autoClose={3000}/>
-
+      <Rerouter/>
       <header className="App-header">
         <Routes>
         <Route path='/' element={<Login/>}/> 
@@ -31,6 +33,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/unauthorized' element= {<Unauthorized/>}/>
         <Route path='/inprogress' element= {<PrivateRoute allowedRoles={['User']}><RideCountdown/></PrivateRoute>}/>
+        <Route path='/inprogressDriver' element= {<PrivateRoute allowedRoles={['Driver']}><DriverRideCountdown/></PrivateRoute>}/>
         <Route path='/home' element={<PrivateRoute allowedRoles={['Admin','User','Driver']}><HomePage/></PrivateRoute>}>
           <Route path='/home/profile' element={<Profile/>}/>
           <Route path='/home/admin/adminPanel' element={<PrivateRoute allowedRoles={['Admin']}><AdminPanel/></PrivateRoute>}/>

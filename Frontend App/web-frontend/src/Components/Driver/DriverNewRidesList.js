@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getAvailableRides, acceptRide } from "../../Services/RideService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DriverNewRidesList = () => {
   
   const [rides, setRides] = useState([]);
   
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRides = async () => {
@@ -36,6 +39,13 @@ const DriverNewRidesList = () => {
       const updatedRides = [...rides];
       updatedRides[index].accepted = true;
       setRides(updatedRides);
+      if (rideId !== 0) {
+        localStorage.setItem('inProgress', true);
+        navigate("/inprogressDriver", { replace: true });
+      } else {
+        toast.error("Unable to accept ride!");
+      }
+
     } catch (error) {
       console.error('Failed to accept the ride:', error);
     }

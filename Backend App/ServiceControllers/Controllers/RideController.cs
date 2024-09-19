@@ -113,7 +113,8 @@ namespace ServiceControllers.Controllers
 
                 if (ride.Id != 0)
                 {
-                    if (await UsersServices.SetUserWaitOnRide(ride))
+                    ride.Id = ride_id;
+                    if (await UsersServices.SetDriverWaitOnRide(ride))
                         return Ok(ride);
                     else
                         return BadRequest("User can't be added into wait state.");
@@ -129,6 +130,32 @@ namespace ServiceControllers.Controllers
 
         [HttpGet("in-progress/{user_id}")]
         public async Task<IActionResult> IsUserAtRide(int user_id)
+        {
+            if (user_id == 0)
+                return BadRequest("You didn't provide necessary data.");
+
+            string jwt_role = TokenService.GetClaimValueFromToken(HttpContext.Request.Headers.Authorization, "user_role");
+
+            if (string.IsNullOrEmpty(jwt_role) || (jwt_role != "Driver" && jwt_role != "User"))
+                return Unauthorized("You don't have permission to view data!");
+
+            try
+            {
+                RideDataDTO data = await UsersServices.GetUserRideData(user_id);
+
+                if (data.Id != 0)
+                    return Ok(data);
+                else
+                    return BadRequest("User is not at wait state.");
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("in-progressDriver/{user_id}")]
+        public async Task<IActionResult> IsDriverAtRide(int user_id)
         {
             if (user_id == 0)
                 return BadRequest("You didn't provide necessary data.");

@@ -157,5 +157,17 @@ namespace UserServiceStateful
             }
             return false;
         }
+
+        public async Task<bool> SetDriverWaitOnRide(RideDataDTO data)
+        {
+            var user = await _repository.GetUserByIdAsync(data.DriverId);
+            if (user != null)
+            {
+                user.RideDataId = data.Id;
+                await _repository.UpdateUserAsync(user);
+                return true;
+            }
+            return false;
+        }
     }
 }

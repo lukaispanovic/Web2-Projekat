@@ -85,6 +85,16 @@ export const isUserAtRide = async (userId, token) => {
   }
 };
 
+export const isDriverAtRide = async (userId, token) => {
+  setAuthToken(token);
+  try {
+    const response = await axiosInstance.get(`api/ride/in-progressDriver/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const writeReview = async (rideId, review, token) => {
   setAuthToken(token);

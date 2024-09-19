@@ -16,7 +16,7 @@ namespace Common.DTOs
         [DataMember]
         public int UserId { get; set; }
         [DataMember]
-        public int? DriverId { get; set; }
+        public int DriverId { get; set; }
 
         [DataMember]
         public string StartAddress { get; set; } = string.Empty;
