@@ -37,7 +37,7 @@ const VerifyDrivers = () => {
               <tr>
                 <th>Username</th>
                 <th>Name</th>
-                <th>Last Name</th>
+                <th>Surname</th>
                 <th>Email</th>
                 <th>Date of Birth</th>
                 <th>Address</th>

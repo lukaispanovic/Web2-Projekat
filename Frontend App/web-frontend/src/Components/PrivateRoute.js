@@ -18,6 +18,9 @@ export default function PrivateRoute({ children, allowedRoles }) {
         if(decodedToken.user_role === "Driver" && !u.isVerified())
             return <Navigate to='/unauthorized' />
 
+        if(role === "User"&& localStorage.getItem('inProgress') === true && location.pathname !== '/inprogress'){
+            return <Navigate to='/inprogress' />}
+
         return children;
     
     }

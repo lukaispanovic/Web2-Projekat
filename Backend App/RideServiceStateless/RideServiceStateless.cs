@@ -12,6 +12,7 @@ using Microsoft.ServiceFabric.Services.Client;
 using Microsoft.ServiceFabric.Services.Communication.Client;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using RideServiceStateless.RideServiceDatabase;
 
@@ -158,7 +159,7 @@ namespace RideServiceStateless
 
                 ride.RideStatus = StatusOfRide.InProgress;
                 ride.DriverId = driverId;
-                ride.TravelTime = new Random().Next(10, 60);
+                ride.WaitingTime = new Random().Next(10, 60);
 
                 var updatedRide = await ridesRepository.UpdateRideAsync(ride);
                 return updatedRide.Id != 0 ? _mapper.Map<RideDataDTO>(updatedRide) : new RideDataDTO { Id = 0 };
@@ -169,10 +170,7 @@ namespace RideServiceStateless
             }
         }
 
-        protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
-        {
-            return new ServiceInstanceListener[0];
-        }
+        protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners() => this.CreateServiceRemotingInstanceListeners();
 
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {

@@ -22,7 +22,7 @@ function Header() {
     useEffect(() => {
         setUserRole('');
         const currentPath = location.pathname;
-        if(currentPath === '/login' || currentPath === '/register'){
+        if(currentPath === '/login' || currentPath === '/register' || currentPath === '/inprogress'){
             return;
         }
         var token = localStorage.getItem('token');

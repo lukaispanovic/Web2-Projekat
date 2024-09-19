@@ -26,7 +26,7 @@ export const getRides = async (id, token) => {
         headers: {
           Authorization: token,
         },});
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }

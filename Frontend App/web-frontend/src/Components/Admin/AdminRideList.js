@@ -7,7 +7,7 @@ const AdminRideList = ({ rides }) => {
       <ul>
         {rides.map((ride, index) => (
           <li key={index}>
-            Od: {ride.startAddress} Do: {ride.endAddress} Cena: {ride.price} RSD Vreme čekanja: {ride.waitTime} minuta Status: {ride.accepted ? (ride.completed ? 'Završena' : 'Prihvaćena') : 'Čeka na prihvatanje'}
+            From: {ride.startAddress} To: {ride.endAddress} Price: {ride.price} RSD Travel Time: {ride.travelTime} minutes Status: {ride.accepted ? (ride.completed ? 'Completed' : 'Accepted') : 'Waiting to be accepted'}
           </li>
         ))}
       </ul>

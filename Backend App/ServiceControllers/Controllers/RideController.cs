@@ -78,7 +78,7 @@ namespace ServiceControllers.Controllers
             {
                 var rideDat = await UsersServices.GetUserRideData(data.UserId);
                 if (data.Id != 0)
-                    return BadRequest("Already orderd ride");
+                    return BadRequest("Already ordered ride");
 
                 RideDataDTO ride = await RidesServices.CreateNewRide(data);
 

@@ -60,11 +60,11 @@ const AdminPanel = () => {
       <ul>
         {drivers.map((driver, index) => (
           <li key={index}>
-            {driver.name} - Prosečna ocena: {driver.score}
+            {driver.name} - Average rating: {driver.score}
           </li>
         ))}
       </ul>
-      <h4>Odobreni vozači:</h4>
+      <h4>Verified drivers:</h4>
       <ul>
         {drivers.filter(driver => driver.verified === true).map((driver, index) => {
         const scoreData = driversWScore.find(score => score.driverId === driver.id);
@@ -72,7 +72,7 @@ const AdminPanel = () => {
 
         return (
         <li key={index}>
-        {driver.name} - Prosečna ocena: {averageScore}
+        {driver.name} - Average rating: {averageScore}
       </li>
     );
   })}
