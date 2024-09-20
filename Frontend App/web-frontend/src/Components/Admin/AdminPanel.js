@@ -5,7 +5,6 @@ import AdminRideList from "./AdminRideList";
 import Header from "../Header";
 
 const AdminPanel = () => {
-
   const [drivers, setDrivers] = useState([]);
   const [rides, setRides] = useState([]);
   const [driversWScore, setDriversWScore] = useState([]);
@@ -15,68 +14,71 @@ const AdminPanel = () => {
       try {
         const response = await GetDrivers();
         setDrivers(response.data);
+        return response.data;
       } catch (error) {
         console.error('Failed to fetch drivers:', error);
       }
     };
-  
+
     const fetchRides = async () => {
       try {
-        const response = await getRides();
-        setRides(response.data); 
+        const tokenS = localStorage.getItem('encodedToken');
+        const token = tokenS ? JSON.parse(tokenS) : null;
+        const response = await getRides(0, token);
+        setRides(response.data);
+        return response.data;
       } catch (error) {
         console.error('Failed to fetch rides:', error);
       }
     };
-  
-    const calculateScore = () => {
+
+    const calculateScore = (drivers, rides) => {
       const driverScores = drivers.map(driver => {
         const driverRides = rides.filter(ride => ride.driverId === driver.id);
+        const ratedRides = driverRides.filter(ride => ride.reviewScore > 0);
         
-        const totalRating = driverRides.reduce((sum, ride) => sum + (ride.reviewScore || 0), 0);
-        const numberOfRides = driverRides.length;
-        const averageRating = numberOfRides > 0 ? totalRating / numberOfRides : 0;
-  
-        const score = averageRating * numberOfRides; 
-        
+        const totalRating = ratedRides.reduce((sum, ride) => sum + ride.reviewScore, 0);
+        const numberOfRatedRides = ratedRides.length;
+        const averageRating = numberOfRatedRides > 0 ? totalRating / numberOfRatedRides : 0;
+
+        const score = parseFloat(averageRating.toFixed(2));
+
         return {
           ...driver,
           score: score,
         };
       });
-  
+
       setDriversWScore(driverScores);
     };
-    
 
-    fetchDrivers().then(fetchRides).then(calculateScore);
-  
-  }, []); 
-  
+    const fetchData = async () => {
+      const fetchedDrivers = await fetchDrivers();
+      const fetchedRides = await fetchRides();
+      if (fetchedDrivers && fetchedRides) {
+        calculateScore(fetchedDrivers, fetchedRides);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-
     <div>
       <h3>Admin Panel</h3>
-      <ul>
-        {drivers.map((driver, index) => (
-          <li key={index}>
-            {driver.name} - Average rating: {driver.score}
-          </li>
-        ))}
-      </ul>
       <h4>Verified drivers:</h4>
       <ul>
         {drivers.filter(driver => driver.verified === true).map((driver, index) => {
-        const scoreData = driversWScore.find(score => score.driverId === driver.id);
-        const averageScore = scoreData ? scoreData.score : 'No rating';
+          const scoreData = driversWScore.find(score => score.id === driver.id);
+          const averageScore = scoreData ? scoreData.score : 'No rating';
 
-        return (
-        <li key={index}>
-        {driver.name} - Average rating: {averageScore}
-      </li>
-    );
-  })}
-</ul>
+          return (
+            <li key={index}>
+              {driver.name} - Average rating: {averageScore}
+            </li>
+          );
+        })}
+      </ul>
 
       <div>
         <AdminRideList rides={rides} />
