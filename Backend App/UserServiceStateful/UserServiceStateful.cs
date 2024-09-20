@@ -75,6 +75,7 @@ namespace UserServiceStateful
             else
                 user.Verified = true;
             user.RideDataId = -1;
+            user.Blocked = false;
             await _repository.AddUserAsync(user);
             return _mapper.Map<UserDTO>(user);
         }
@@ -129,6 +130,14 @@ namespace UserServiceStateful
         {
             var user = await _repository.GetUserByUsernameAsync(username);
             user.Verified = isVerified;
+            await _repository.UpdateUserAsync(user);
+            return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> BlockUser(string username, bool isBlocked)
+        {
+            var user = await _repository.GetUserByUsernameAsync(username);
+            user.Blocked = isBlocked;
             await _repository.UpdateUserAsync(user);
             return _mapper.Map<UserDTO>(user);
         }

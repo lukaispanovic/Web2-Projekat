@@ -1,7 +1,7 @@
 import React from 'react';
 
 export class User {
-    constructor(username, name, surname, address, birthday, userType, email, profilePictureUrl, id, verified) {
+    constructor(username, name, surname, address, birthday, userType, email, profilePictureUrl, id, verified, blocked) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -12,10 +12,14 @@ export class User {
         this.profilePictureUrl = profilePictureUrl;
         this.id = id;
         this.verified = verified;
+        this.blocked = blocked;
     }
     
     isVerified() {
         return this.verified === true;
+    }
+    isBlocked(){
+        return this.blocked === true;
     }
     Username(){
       return this.username;
@@ -36,7 +40,8 @@ export class User {
             obj.email,
             obj.profilePictureUrl,
             obj.id,
-            obj.verified
+            obj.verified,
+            obj.blocked
         );
     }
 }

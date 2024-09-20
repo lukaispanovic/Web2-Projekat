@@ -21,5 +21,6 @@ namespace Common.Interfaces
         Task<RideDataDTO> GetUserRideData(int user_id);
         Task<bool> SetUserWaitOnRide(RideDataDTO data);
         Task<bool> SetDriverWaitOnRide(RideDataDTO data);
+        Task<UserDTO> BlockUser(string username, bool isBlocked);
     }
 }

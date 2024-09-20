@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GetDrivers } from "../../Services/UserService";
 import { getRides } from "../../Services/RideService";
+import { BlockUser } from "../../Services/UserService"; // Import BlockUser function
 import AdminRideList from "./AdminRideList";
 import Header from "../Header";
 
@@ -63,6 +64,22 @@ const AdminPanel = () => {
     fetchData();
   }, []);
 
+  const handleBlockUser = async (username, isBlocked) => {
+    const v = !isBlocked; // Toggle block status
+    try {
+      const response = await BlockUser(username, v);
+      if (response.status === 200) {
+        console.log(`User ${username} ${isBlocked ? 'unblocked' : 'blocked'} successfully.`);
+        const updatedDrivers = await GetDrivers();
+        setDrivers(updatedDrivers.data);
+      } else {
+        console.error('Failed to block/unblock user:', response);
+      }
+    } catch (error) {
+      console.error('Error blocking/unblocking user:', error);
+    }
+  };
+
   return (
     <div>
       <h3>Admin Panel</h3>
@@ -75,6 +92,9 @@ const AdminPanel = () => {
           return (
             <li key={index}>
               {driver.name} - Average rating: {averageScore}
+              <button onClick={() => handleBlockUser(driver.username, driver.blocked)}>
+                {driver.blocked ? 'Unblock' : 'Block'}
+              </button> {/* Block/Unblock button */}
             </li>
           );
         })}

@@ -102,6 +102,20 @@ export const LoginUser = async (data) => {
     }
   };
 
+  export const BlockUser= async (username, v) => {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/block/${username}/${v}`, [], {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':  JSON.parse(localStorage.getItem('encodedToken')),
+        },
+      });
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
   export const GetDrivers = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/getDrivers`, {
@@ -116,10 +130,10 @@ export const LoginUser = async (data) => {
     }
   };
 
-  export const GetUserData = async (username) => {
+  export const GetUserData = async (id) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/getUserData`, {
-        params: { username },
+        params: { id },
       });
       return response;
     } catch (error) {

@@ -179,6 +179,36 @@ namespace ServiceControllers.Controllers
             }
         }
 
+        [HttpPut("block/{username}/{v}")]
+        public async Task<IActionResult> BlockUser(string username, bool v)
+        {
+
+            if (TokenService.GetClaimValueFromToken(HttpContext.Request.Headers.Authorization, "user_role") != "Admin")
+                return Unauthorized("You don't have permission to read user data!");
+
+            try
+            {
+                UserDTO user = await _userService.BlockUser(username, v);
+
+                if (user != null && user.Id != 0)
+                {
+                    string email = user.Email;
+                    string poruka = $"Your account status is now: {(v ? "blocked" : "unblocked")}";
+
+
+                    await ServiceProxy.Create<IEmailServiceStateless>(new Uri("fabric:/Backend_App/EmailServiceStateless")).AddEmail(email, poruka);
+
+                    return Ok("Account status has been updated!");
+                }
+                else
+                    return NotFound("User profile couldn't be found!");
+            }
+            catch
+            {
+                return BadRequest(500);
+            }
+        }
+
         [HttpGet("getDrivers")]
         public async Task<IActionResult> GetDrivers()
         {

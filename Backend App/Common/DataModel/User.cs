@@ -45,5 +45,7 @@ namespace Common.DataModel
 
         [DataMember]
         public bool? Verified { get; set; }
+        [DataMember]
+        public bool? Blocked { get; set; }
     }
 }

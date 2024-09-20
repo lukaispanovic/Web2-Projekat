@@ -23,7 +23,8 @@ namespace Common
                 UserType = dto.UserType,
                 Email = dto.Email,
                 ProfilePictureUrl = profilePictureUrl,
-                Verified = false
+                Verified = false,
+                Blocked = false
             };
         }
 
@@ -40,7 +41,8 @@ namespace Common
                 UserType = dto.UserType,
                 Email = dto.Email,
                 ProfilePictureUrl = profilePictureUrl,
-                Verified = false
+                Verified = true,
+                Blocked = false
             };
         }
     }

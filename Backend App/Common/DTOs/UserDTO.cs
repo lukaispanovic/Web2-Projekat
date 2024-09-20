@@ -19,6 +19,7 @@ namespace Common.DTOs
         public long Id { get; set; }
 
         public bool? Verified { get; set; }
+        public bool? Blocked { get; set; }
 
         public UserDTO() => Id = 0;
     }
