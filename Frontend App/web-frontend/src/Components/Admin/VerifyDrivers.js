@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GetDrivers, VerifyUser } from "../../Services/UserService";
+import "../Styles/AdminStyle.css";
 
 const VerifyDrivers = () => {
     const [usersForVerification, setUsersForVerification] = useState([]);
@@ -30,9 +31,9 @@ const VerifyDrivers = () => {
     }, []);
   
     return (
-      <div id="historyComponent">
-        <h2>Driver Verification</h2>
-       {usersForVerification.length > 0 ? (   <table>
+      <div id="historyComponent" className="verify-drivers-container">
+        <h2 className="verify-title">Driver Verification</h2>
+       {usersForVerification.length > 0 ? (   <table className="verify-table">
             <thead>
               <tr>
                 <th>Username</th>

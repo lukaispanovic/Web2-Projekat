@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { LoginUser } from "../Services/UserService";
+import "./Styles/LoginRegisterStyle.css";
 
 function Login(){
     const [errorMessages, setErrorMessages] = useState({});

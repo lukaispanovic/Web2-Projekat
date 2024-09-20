@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { getUserFromLocalStorage } from "../DataModel/User";
+import "./Styles/Header.css";
 
 function Header() {
     const nav = useNavigate();

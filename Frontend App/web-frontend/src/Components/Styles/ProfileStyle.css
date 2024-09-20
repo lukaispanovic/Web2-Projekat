@@ -1,0 +1,38 @@
+/* Profile Component CSS */
+
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .form-content {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  #profile-image {
+    display: block;
+    margin: 10px auto;
+    border-radius: 50%;
+    border: 2px solid #ced4da;
+  }
+  
+  #form {
+    margin-top: 50px;
+  }
+  
+  button {
+    width: 100%;
+  }
+  

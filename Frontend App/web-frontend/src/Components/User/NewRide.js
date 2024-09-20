@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createRide } from "../../Services/RideService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "../Styles/UserStyle.css";
 
 const NewRide = () => {
   const navigate = useNavigate();
@@ -75,9 +76,9 @@ const NewRide = () => {
   }, [data.startAddress, data.endAddress]);
 
   return (
-    <div>
+    <div className="user-container">
       <h2>Order New Ride</h2>
-      <table>
+      <table className="user-table">
         <tbody>
           <tr>
             <td>{data.price}</td>

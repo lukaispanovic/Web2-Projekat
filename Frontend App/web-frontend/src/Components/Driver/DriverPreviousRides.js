@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getRides } from "../../Services/RideService";
+import "../Styles/DriverStyle.css";
 
 const DriverPreviousRides = () => {
 
@@ -24,12 +25,26 @@ const DriverPreviousRides = () => {
   }, [])
 
   return (
-    <div>
+    <div className="previous-rides-container">
       <h3>Previous Rides</h3>
-      <ul>
+      <ul className="ride-list">
         {rides.filter(ride => ride.rideStatus === 2).map((ride, index) => (
-          <li key={index}>
-            From: {ride.startAddress} To: {ride.endAddress} Price: {ride.price} RSD Waiting time: {ride.waitingTime} minutes Travel time: {ride.travelTime} minutes
+          <li className="ride-list-item" key={index}>
+            <div className="ride-info">
+              <span className="ride-label">From:</span> <span className="ride-value">{ride.startAddress || 'N/A'}</span>
+            </div>
+            <div className="ride-info">
+              <span className="ride-label">To:</span> <span className="ride-value">{ride.endAddress || 'N/A'}</span>
+            </div>
+            <div className="ride-info">
+              <span className="ride-label">Price:</span> <span className="ride-value">{ride.price} RSD</span>
+            </div>
+            <div className="ride-info">
+              <span className="ride-label">Waiting time:</span> <span className="ride-value">{ride.waitingTime} minutes</span>
+            </div>
+            <div className="ride-info">
+              <span className="ride-label">Travel time:</span> <span className="ride-value">{ride.travelTime} minutes</span>
+            </div>
           </li>
         ))}
       </ul>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form, Button } from 'react-bootstrap';
+import "./Styles/ProfileStyle.css";
 import { User, getUserFromLocalStorage } from "../DataModel/User";
 import { EditProfile, FetchPFP } from "../Services/UserService";
 import axios from "axios";

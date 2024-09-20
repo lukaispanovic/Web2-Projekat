@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isDriverAtRide } from '../../Services/RideService';
+import "../Styles/DriverStyle.css";
 
 const DriverRideCountdown = () => {
   const navigate = useNavigate();
@@ -86,21 +87,17 @@ const DriverRideCountdown = () => {
   }, [startCountdown, navigate]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1.5rem", backgroundColor: "#192339" }}>
-      <div style={{ color: "#e2e8f0", textAlign: "center" }}>
-        {ride.waitingTime > 0 ? (
-          <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Picking up passenger</h1>
-        ) : (
-          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Driving</h2>
-        )}
-        <div className="driver-countdown-component">
-          <div className="countdown-timers">
-            <div>
-              <h2>Wait Duration: {ride.waitingTime}</h2>
-            </div>
-            <div>
-              <h2>Ride Duration: {ride.travelTime}</h2>
-            </div>
+    <div className="ride-countdown-container">
+      <div>
+        <h1 className="ride-countdown-title">
+          {ride.waitingTime > 0 ? "Picking up passenger" : "Driving"}
+        </h1>
+        <div className="countdown-timers">
+          <div className="countdown-timer">
+            <h2>Wait Duration: {ride.waitingTime}</h2>
+          </div>
+          <div className="countdown-timer">
+            <h2>Ride Duration: {ride.travelTime}</h2>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isUserAtRide, finishRide } from '../../Services/RideService';
+import "../Styles/UserStyle.css";
 
 const RideCountdown = () => {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ const RideCountdown = () => {
   }, [ride.rideStatus, startCountdown]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1.5rem", backgroundColor: "#192339" }}>
+    <div className="user-container" style={{ backgroundColor: "#192339", color: "#e2e8f0" }}>
       <div style={{ color: "#e2e8f0", textAlign: "center" }}>
         {ride.rideStatus === 1 ? (
           <>

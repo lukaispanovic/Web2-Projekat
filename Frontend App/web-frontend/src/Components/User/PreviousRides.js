@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getRides, writeReview } from "../../Services/RideService";
 import { toast } from "react-toastify";
+import "../Styles/UserStyle.css";
 
 const PreviousRides = () => {
   const [rideHistory, setRideHistory] = useState([]);
@@ -43,10 +44,10 @@ const PreviousRides = () => {
   };
 
   return (
-    <div id="historyComponent">
+    <div className="user-container" id="historyComponent">
       <h2>My ride history</h2>
       {rideHistory.length > 0 ? (
-        <table>
+        <table className="user-table">
           <thead>
             <tr>
               <th>Id</th>

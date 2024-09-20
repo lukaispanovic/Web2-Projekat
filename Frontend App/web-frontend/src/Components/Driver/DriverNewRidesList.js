@@ -3,6 +3,7 @@ import { getAvailableRides, acceptRide } from "../../Services/RideService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GetUserData } from "../../Services/UserService";
+import "../Styles/DriverStyle.css";
 
 const DriverNewRidesList = () => {
   
@@ -75,13 +76,18 @@ const DriverNewRidesList = () => {
   };
 
   return (
-    <div>
+    <div className="new-rides-container">
       <h3>Rides waiting to be accepted</h3>
-      <ul>
+      <ul className="ride-list">
         {rides.filter(ride => (ride.rideStatus === 1)).map((ride, index) => (
-          <li key={index}>
-            From: {ride.startAddress} To: {ride.endAddress} Price: {ride.price} RSD Travel time: {ride.travelTime} min
-            <button onClick={() => onAcceptRide(index)}>Accept</button>
+          <li className="ride-list-item" key={index}>
+            <div className="ride-details">
+              <p><strong>From:</strong> {ride.startAddress}</p>
+              <p><strong>To:</strong> {ride.endAddress}</p>
+              <p><strong>Price:</strong> {ride.price} RSD</p>
+              <p><strong>Travel Time:</strong> {ride.travelTime} min</p>
+            </div>
+            <button className="accept-button" onClick={() => onAcceptRide(index)}>Accept</button>
           </li>
         ))}
       </ul>

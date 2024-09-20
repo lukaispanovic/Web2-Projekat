@@ -3,6 +3,7 @@ import { GetDrivers } from "../../Services/UserService";
 import { getRides } from "../../Services/RideService";
 import { BlockUser } from "../../Services/UserService"; // Import BlockUser function
 import AdminRideList from "./AdminRideList";
+import "../Styles/AdminStyle.css";
 import Header from "../Header";
 
 const AdminPanel = () => {
@@ -81,18 +82,18 @@ const AdminPanel = () => {
   };
 
   return (
-    <div>
-      <h3>Admin Panel</h3>
+    <div className="admin-panel-container">
+      <h3 className="admin-panel-title">Admin Panel</h3>
       <h4>Verified drivers:</h4>
-      <ul>
+      <ul className="driver-list">
         {drivers.filter(driver => driver.verified === true).map((driver, index) => {
           const scoreData = driversWScore.find(score => score.id === driver.id);
           const averageScore = scoreData ? scoreData.score : 'No rating';
 
           return (
-            <li key={index}>
+            <li className="driver-list-item" key={index}>
               {driver.name} - Average rating: {averageScore}
-              <button onClick={() => handleBlockUser(driver.username, driver.blocked)}>
+              <button className={driver.blocked ? 'unblock-button' : 'block-button'} onClick={() => handleBlockUser(driver.username, driver.blocked)}>
                 {driver.blocked ? 'Unblock' : 'Block'}
               </button> {/* Block/Unblock button */}
             </li>

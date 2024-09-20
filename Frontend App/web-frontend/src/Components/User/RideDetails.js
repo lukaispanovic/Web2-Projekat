@@ -1,11 +1,12 @@
 import React from 'react';
+import "../Styles/UserStyle.css";
 
 const RideDetails = ({ price, waitTime, onConfirm }) => {
   return (
-    <div>
+    <div className="user-container">
       <p>Price: {price} RSD</p>
       <p>Waiting time: {waitTime} minutes</p>
-      <button onClick={onConfirm}>Confirm</button>
+      <button className="user-button" onClick={onConfirm}>Confirm</button>
     </div>
   );
 };
