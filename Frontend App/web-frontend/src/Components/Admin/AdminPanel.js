@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GetDrivers } from "../../Services/UserService";
 import { getRides } from "../../Services/RideService";
-import { BlockUser } from "../../Services/UserService"; // Import BlockUser function
+import { BlockUser } from "../../Services/UserService";
 import AdminRideList from "./AdminRideList";
 import "../Styles/AdminStyle.css";
 import Header from "../Header";
@@ -63,6 +63,10 @@ const AdminPanel = () => {
     };
 
     fetchData();
+
+    const intervalId = setInterval(fetchData, 15000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleBlockUser = async (username, isBlocked) => {
@@ -95,7 +99,7 @@ const AdminPanel = () => {
               {driver.name} - Average rating: {averageScore}
               <button className={driver.blocked ? 'unblock-button' : 'block-button'} onClick={() => handleBlockUser(driver.username, driver.blocked)}>
                 {driver.blocked ? 'Unblock' : 'Block'}
-              </button> {/* Block/Unblock button */}
+              </button>
             </li>
           );
         })}

@@ -12,37 +12,43 @@ const DriverNewRidesList = () => {
   
   const navigate = useNavigate();
 
+  const fetchRides = async () => {
+    try {
+      const tokenS = localStorage.getItem('encodedToken');
+      const token = tokenS ? JSON.parse(tokenS) : null;
+
+      const response = await getAvailableRides(token);
+
+      if (response.status === 200 && response.data.length !== 0) {
+        setRides(response.data); 
+      }
+    } catch (error) {
+      console.error('Failed to fetch rides:', error);
+    }
+  };
+
+  const fetchDriverInfo = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const driverInfo = await GetUserData(token.id);
+
+      if (driverInfo && driverInfo.data) {
+        setIsBlocked(driverInfo.data.blocked === true);
+      }
+    } catch (error) {
+      console.error('Failed to fetch driver info:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchRides = async () => {
-      try {
-        const tokenS = localStorage.getItem('encodedToken');
-        const token = tokenS ? JSON.parse(tokenS) : null;
-
-        const response = await getAvailableRides(token);
-
-        if (response.status === 200 && response.data.length !== 0) {
-          setRides(response.data); 
-        }
-      } catch (error) {
-        console.error('Failed to fetch rides:', error);
-      }
-    };
-
-    const fetchDriverInfo = async () => {
-      try {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const driverInfo = await GetUserData(token.id);
-
-        if (driverInfo && driverInfo.data) {
-          setIsBlocked(driverInfo.data.blocked === true);
-        }
-      } catch (error) {
-        console.error('Failed to fetch driver info:', error);
-      }
-    };
-
     fetchRides();
     fetchDriverInfo();
+
+    const intervalId = setInterval(() => {
+      fetchRides();
+    }, 15000); // 15 seconds
+
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
   }, []);
 
   const onAcceptRide = async (index) => {
