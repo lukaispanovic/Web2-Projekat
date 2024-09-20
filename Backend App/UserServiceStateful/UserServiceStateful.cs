@@ -15,6 +15,7 @@ using Microsoft.ServiceFabric.Services.Runtime;
 using UserServiceStateful.UserServiceDatabase;
 using Common.DataModel;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
+using BCrypt.Net;
 
 namespace UserServiceStateful
 {
@@ -46,22 +47,25 @@ namespace UserServiceStateful
             {
                 return new UserDTO();
             }
-            if(user.Password != dto.Password)
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
                 UserDTO userFail = new();
                 userFail.Id = -1;
                 return userFail;
             }
+
             return _mapper.Map<UserDTO>(user);
         }
 
         public async Task<UserDTO> RegisterUser(User user)
         {
             var userExists = await _repository.GetUserByEmailAsync(user.Email);
-            if( userExists != null)
+            if (userExists != null)
             {
                 return new UserDTO();
             }
+
             var usernameTaken = await _repository.GetUserByUsernameAsync(user.Username);
             if (usernameTaken != null)
             {
@@ -70,10 +74,14 @@ namespace UserServiceStateful
                 return userFail;
             }
 
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.Password = hashedPassword;
+
             if (user.UserType == "Driver")
                 user.Verified = false;
             else
                 user.Verified = true;
+
             user.RideDataId = -1;
             user.Blocked = false;
             await _repository.AddUserAsync(user);
